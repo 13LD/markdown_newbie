@@ -17,7 +17,7 @@ send a link to public github repository with executable ruby script to skype *iv
 ## Sample code blocks
 
 ### Ruby
-```
+```ruby
 1.upto(100) do |n|
   print "Fizz" if a = (n % 3).zero?
   print "Buzz" if b = (n % 5).zero?
@@ -27,7 +27,7 @@ end
 ```
 
 ### PHP
-```
+```php
 <?php
 for ($i = 1; $i <= 100; $i++)
 {
@@ -44,12 +44,12 @@ for ($i = 1; $i <= 100; $i++)
 ```
 
 ### PERL
-```
+```perl
 print 'Fizz'x!($_ % 3) . 'Buzz'x!($_ % 5) || $_, "\n" for 1 .. 100;
 ```
 
 ### Python
-```
+```python
 for i in xrange(1, 101):
     if i % 15 == 0:
         print "FizzBuzz"
@@ -61,7 +61,7 @@ for i in xrange(1, 101):
         print i
 ```
 ### Java
-```
+```javascript
 var fizzBuzz = function () {
   var i, output;
   for (i = 1; i < 101; i += 1) {
@@ -74,7 +74,7 @@ var fizzBuzz = function () {
 ```
 
 ### C#
-```
+```c#
 class Program
 {
     static void Main()

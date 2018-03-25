@@ -6,9 +6,9 @@ def markdown(url)
   system("curl https://raw.githubusercontent" + parsed_url + "/master/README.md > file/README.md")
 end
 
-def parse_file
+def parse_blocks
   path = File.join(File.dirname(__FILE__), 'file/README.md')
-  block_counter, data, predict_response, parsed = 0,  "", "", []
+  block_counter, iter, data, predict_response, new_data, parsed, lang = 0, 0, "", "", "", [], []
   File.open(path, 'r+').each do |line|
     data << line
   end
@@ -26,19 +26,34 @@ def parse_file
       f.puts block
     end
     dat = `guesslang -i file/block#{index}`
-    p dat
     predict_response << dat
   }
 
   parsed_prediction = predict_response.split(/guesslang.__main__ INFO The source code is written in /)[1..-1].each_slice(1).to_a
+
   parsed_prediction.each do |t|
-    p t.join("").split(/\n/).first.downcase!
+    lang << t.join(" ").split(/\n/).first.downcase!
   end
 
+
+  File.open(path, 'r+').each do |line|
+    if line.include? "```" and block_counter % 2 == 0
+      new_data << "```" + lang[iter] + "\n"
+      iter += 1
+      block_counter -= 1
+    elsif line.include? "```" and block_counter % 2 == 1
+      new_data << line
+      block_counter -= 1
+    else
+      new_data << line
+    end
+  end
+  File.open(path, "w") {|file| file.puts new_data }
 end
 
 
-
 markdown(URL)
-system("pip3 install guesslang")
-parse_file
+
+if system("pip3 install guesslang")
+  parse_blocks
+end
