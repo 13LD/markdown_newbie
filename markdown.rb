@@ -1,5 +1,5 @@
 
-URL = "https://github.com/DenisUA/markdown_newbie"
+URL = "https://github.com/john-denisov/markdown_newbie"
 PATH = File.join(File.dirname(__FILE__), 'file/README.md')
 
 def markdown(url)
