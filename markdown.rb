@@ -1,4 +1,4 @@
-URL = "https://github.com/13LD/photography-backend"
+URL = "https://github.com/DenisUA/markdown_newbie"
 
 def markdown(url)
   parsed_url = url.slice(url.index(".com")..-1)

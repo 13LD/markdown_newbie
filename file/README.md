@@ -1,47 +1,95 @@
-# Simple backend application 
-![build + tests](https://travis-ci.org/13LD/photography-backend.svg?branch=master)
-[![Coverage Status](https://coveralls.io/repos/github/13LD/photography-backend/badge.svg?branch=master)](https://coveralls.io/github/13LD/photography-backend?branch=master)
-[![Code Climate](https://codeclimate.com/github/codeclimate/codeclimate/badges/gpa.svg)](https://codeclimate.com/github/13LD/photography-backend)
+# FTL test assignment
 
-##### TODO
-- [x] fix api concerns
-- [x] swagger concerns
-- [x] user concerns
-## Benefits of token-based authentication
-#### There are several benefits to using such approach:
+## Description
+Write a ruby script that:
+* accepts url to github repository as a command line argument
+* grabs `README.md` file from this repository
+* checks if `README.md` has any multiline code blocks without syntax highlighting
+* automatically determines programming language for those code blocks
+* generates new version of `README.md` with syntax highlighting added
+* **bonus task**: creates a pull request with new version of markdown file and outputs URL to that pull request to STDOUT
 
-#### Cross-domain / CORS
-- Cookies and CORS don't mix well across different domains. A token-based approach allows you to make AJAX calls to any server, on any domain because you use an HTTP header to transmit the user information.
-#### Stateless
-- Tokens are stateless. There is no need to keep a session store, since the token is a self-contained entity that stores all the user information in it.
-#### Decoupling
-- You are no longer tied to a particular authentication scheme. Tokens may be generated anywhere, so the API can be called from anywhere with a single authenticated command rather than multiple authenticated calls.
-#### Mobile ready
-- Cookies are a problem when it comes to storing user information on native mobile applications. Adopting a token-based approach simplifies this saving process significantly.
-#### CSRF (Cross Site Request Forgery)
-- Because the application does not rely on cookies for authentication, it is invulnerable cross site request attacks.
-#### Performance
-- In terms of server-side load, a network roundtrip (e.g. finding a session on database) is likely to take more time than calculating an HMACSHA256 code to validate a token and parsing its contents, making token-based authentication faster than the traditional alternative.
-## List of gems 
+You can read more about code blocks and syntax highlighting in github's markdown files [here](https://help.github.com/articles/creating-and-highlighting-code-blocks/)
 
-```ruby
-### Gems for JWT auth
-# Use ActiveModel has_secure_password
-gem 'bcrypt', '~> 3.1.7'
+## Expected result
+send a link to public github repository with executable ruby script to skype *ivan.denysov*
 
-# JWT gem will make encoding and decoding of HMACSHA256 tokens available in the Rails application
-gem 'jwt'
+## Sample code blocks
 
-# A simple, standardized way to build and use Service Objects (aka Commands) in Ruby
-gem 'simple_command'
+### Ruby
+```
+1.upto(100) do |n|
+  print "Fizz" if a = (n % 3).zero?
+  print "Buzz" if b = (n % 5).zero?
+  print n unless (a || b)
+  puts
+end
+```
 
-# Docs for entities
-gem 'swagger-blocks'
+### PHP
+```
+<?php
+for ($i = 1; $i <= 100; $i++)
+{
+    if (!($i % 15))
+        echo "FizzBuzz\n";
+    else if (!($i % 3))
+        echo "Fizz\n";
+    else if (!($i % 5))
+        echo "Buzz\n";
+    else
+        echo "$i\n";
+}
+?>
+```
 
+### PERL
+```
+print 'Fizz'x!($_ % 3) . 'Buzz'x!($_ % 5) || $_, "\n" for 1 .. 100;
+```
 
-# Upload files from Ruby applications
-gem 'carrierwave', '~> 0.10.0'
-gem 'mini_magick', '~> 4.3'
-###
- 
+### Python
+```
+for i in xrange(1, 101):
+    if i % 15 == 0:
+        print "FizzBuzz"
+    elif i % 3 == 0:
+        print "Fizz"
+    elif i % 5 == 0:
+        print "Buzz"
+    else:
+        print i
+```
+### Java
+```
+var fizzBuzz = function () {
+  var i, output;
+  for (i = 1; i < 101; i += 1) {
+    output = '';
+    if (!(i % 3)) { output += 'Fizz'; }
+    if (!(i % 5)) { output += 'Buzz'; }
+    console.log(output || i);//empty string is false, so we short-circuit
+  }
+};
+```
+
+### C#
+```
+class Program
+{
+    static void Main()
+    {
+        for (uint i = 1; i <= 100; i++) {
+            string s = null;
+
+            if (i % 3 == 0)
+                s = "Fizz";
+
+            if (i % 5 == 0)
+                s += "Buzz";
+
+            System.Console.WriteLine(s ?? i.ToString());
+        }
+    }
+}
 ```
