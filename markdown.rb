@@ -15,8 +15,13 @@ def lang_prediction(parsed)
     open(file_name, 'w') do |f|
       f.puts block
     end
-    echo = `guesslang -i file/block#{index}`
-    predict_response << echo
+    line_count = `wc -l "#{file_name}"`.strip.split(' ')[0].to_i
+    if line_count > 2
+      echo = `guesslang -i file/block#{index}`
+      predict_response << echo
+    else
+      predict_response << "guesslang.__main__ INFO The source code is written in 1 line"
+    end
   }
 
   parsed_prediction = predict_response.split(/guesslang.__main__ INFO The source code is written in /)[1..-1].each_slice(1).to_a
@@ -30,6 +35,7 @@ end
 
 def update_readme(block_counter, lang)
   iter, new_data = 0,  ""
+  lang.map!{|x|x.nil? ? "":x}
   File.open(PATH, 'r+').each do |line|
     if line.include? "```" and block_counter % 2 == 0
       new_data << "```" + lang[iter] + "\n"
@@ -56,8 +62,10 @@ def markdown_update
     block_counter += 1
     if block_counter % 2 == 1
       parsed << t.join(" ")
+
     end
   end
+
 
   lang = lang_prediction(parsed)
   update_readme(block_counter, lang)
