@@ -1,4 +1,4 @@
-
+require 'octokit'
 URL = "https://github.com/john-denisov/markdown_newbie"
 PATH = File.join(File.dirname(__FILE__), 'file/README.md')
 
@@ -79,4 +79,17 @@ markdown(URL)
 
 if system("pip3 install guesslang")
   markdown_update
+end
+
+client = Octokit::Client.new :access_token => 'ce0ce7be4d9f63f59531c15ab5e3825d336b001e'
+
+client.repos.each do |repo|
+  puts repo.name
+  puts repo.description
+
+  # find the urls
+  puts repo.rels[:html].href
+  puts repo.rels[:git].href
+  puts repo.rels[:clone].href
+  puts repo.rels[:ssh].href
 end
